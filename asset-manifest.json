@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/manq2010/react-todo-app/static/css/main.0e72f7f4.css",
+    "main.js": "/manq2010/react-todo-app/static/js/main.cd9cab09.js",
+    "index.html": "/manq2010/react-todo-app/index.html",
+    "main.0e72f7f4.css.map": "/manq2010/react-todo-app/static/css/main.0e72f7f4.css.map",
+    "main.cd9cab09.js.map": "/manq2010/react-todo-app/static/js/main.cd9cab09.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0e72f7f4.css",
+    "static/js/main.cd9cab09.js"
+  ]
+}
