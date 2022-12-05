@@ -96,7 +96,7 @@ After you're finished please remove all the comments and instructions!
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [Live Demo Link](https://github.com/manq2010/react-todo-app)
+- [Live Demo Link](https://mancobasihlongonyane.me/react-todo-app/)
 
 
 <!-- GETTING STARTED -->
