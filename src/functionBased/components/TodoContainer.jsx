@@ -4,9 +4,12 @@ import { v4 as uuidv4 } from 'uuid';
 import Header from './Header';
 import InputTodo from './InputTodo';
 import TodosList from './TodosList';
+import { Route, Routes } from "react-router-dom"
+import About from '../../pages/About';
+import NotMatch from '../../pages/NotMatch';
 
-const TodoContainer = () => {
-  const [todos, setTodos] = useState(getInitialTodos()) 
+function TodoContainer() {
+  const [todos, setTodos] = useState(getInitialTodos());
 
   const handleChange = (id) => {
     setTodos((prevState) => prevState.map((todo) => {
@@ -42,38 +45,45 @@ const TodoContainer = () => {
           todo.title = updatedTitle;
         }
         return todo;
-      }),
+      })
     );
   };
 
   // useEffect(() => {
   //   console.log("test run")
-  
   //   // getting stored items
   //   const temp = localStorage.getItem("todos")
   //   const loadedTodos = JSON.parse(temp)
-  
   //   if (loadedTodos) {
   //     setTodos(loadedTodos)
   //   }
   // }, [])
-
   function getInitialTodos() {
     // getting stored items
-    const temp = localStorage.getItem("todos")
-    const savedTodos = JSON.parse(temp)
-    return savedTodos || []
+    const temp = localStorage.getItem("todos");
+    const savedTodos = JSON.parse(temp);
+    return savedTodos || [];
   }
- 
+
 
   useEffect(() => {
     // storing todos items
-    const temp = JSON.stringify(todos)
-    localStorage.setItem("todos", temp)
-  }, [todos])
+    const temp = JSON.stringify(todos);
+    localStorage.setItem("todos", temp);
+  }, [todos]);
 
   return (
-    <div className="container">
+    <>
+      <Routes>
+        <Route exact path="/about" element={<About />} />
+        <Route exact path="*" element={<NotMatch />} />
+        <Route exact path="/" element={<TodoReturn />} />
+      </Routes>
+    </>
+  );
+
+  function TodoReturn() {
+    return <div className="container">
       <div className="inner">
         <Header />
         <InputTodo addTodoProps={addTodoItem} />
@@ -81,11 +91,10 @@ const TodoContainer = () => {
           todos={todos}
           handleChangeProps={handleChange}
           deleteTodoProps={delTodo}
-          setUpdate={setUpdate}
-        />
+          setUpdate={setUpdate} />
       </div>
-    </div>
-  );
-};
+    </div>;
+  }
+}
 
 export default TodoContainer;
