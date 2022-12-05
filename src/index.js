@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+// import { BrowserRouter as Router } from 'react-router-dom';
 // component file
-import TodoContainer from './functionBased/components/TodoContainer';
+// import TodoContainer from './functionBased/components/TodoContainer';
+import App from './App';
 
 // stylesheet
 import './functionBased/App.css';
@@ -10,9 +11,8 @@ import './functionBased/App.css';
 // Enabling the Strict Mode in React Application
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <TodoContainer />
-    </Router>
+    {/* <TodoContainer /> */}
+    <App />
   </React.StrictMode>,
   document.getElementById('root'),
 );

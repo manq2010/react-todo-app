@@ -1,32 +1,46 @@
 /* eslint-disable */
-import React, { useState, useEffect } from "react"
-import { v4 as uuidv4 } from 'uuid';
-import Header from './Header';
-import InputTodo from './InputTodo';
-import TodosList from './TodosList';
-import { Route, Routes } from "react-router-dom"
-import About from '../../pages/About';
-import NotMatch from '../../pages/NotMatch';
+import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+import Header from "./Header";
+import InputTodo from "./InputTodo";
+import TodosList from "./TodosList";
+
+function TodoContainerReturn(props) {
+  return (
+    <div className="container">
+      <div className="inner">
+        <Header />
+        <InputTodo addTodoProps={props.addTodoItem} />
+        <TodosList
+          todos={props.todos}
+          handleChangeProps={props.handleChange}
+          deleteTodoProps={props.delTodo}
+          setUpdate={props.setUpdate}
+        />
+      </div>
+    </div>
+  );
+}
 
 function TodoContainer() {
   const [todos, setTodos] = useState(getInitialTodos());
 
   const handleChange = (id) => {
-    setTodos((prevState) => prevState.map((todo) => {
-      if (todo.id === id) {
-        return {
-          ...todo,
-          completed: !todo.completed,
-        };
-      }
-      return todo;
-    }));
+    setTodos((prevState) =>
+      prevState.map((todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            completed: !todo.completed,
+          };
+        }
+        return todo;
+      })
+    );
   };
 
   const delTodo = (id) => {
-    setTodos([
-      ...todos.filter((todo) => todo.id !== id),
-    ]);
+    setTodos([...todos.filter((todo) => todo.id !== id)]);
   };
 
   const addTodoItem = (title) => {
@@ -65,7 +79,6 @@ function TodoContainer() {
     return savedTodos || [];
   }
 
-
   useEffect(() => {
     // storing todos items
     const temp = JSON.stringify(todos);
@@ -73,28 +86,14 @@ function TodoContainer() {
   }, [todos]);
 
   return (
-    <>
-      <Routes>
-        <Route exact path="/about" element={<About />} />
-        <Route exact path="*" element={<NotMatch />} />
-        <Route exact path="/" element={<TodoReturn />} />
-      </Routes>
-    </>
+    <TodoContainerReturn
+      todos={todos}
+      handleChange={handleChange}
+      delTodo={delTodo}
+      addTodoItem={addTodoItem}
+      setUpdate={setUpdate}
+    ></TodoContainerReturn>
   );
-
-  function TodoReturn() {
-    return <div className="container">
-      <div className="inner">
-        <Header />
-        <InputTodo addTodoProps={addTodoItem} />
-        <TodosList
-          todos={todos}
-          handleChangeProps={handleChange}
-          deleteTodoProps={delTodo}
-          setUpdate={setUpdate} />
-      </div>
-    </div>;
-  }
 }
 
 export default TodoContainer;
