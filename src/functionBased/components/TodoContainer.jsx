@@ -1,42 +1,46 @@
-/* eslint-disable */
-import React, { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
-import Header from "./Header";
-import InputTodo from "./InputTodo";
-import TodosList from "./TodosList";
+import React, { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import Header from './Header';
+import InputTodo from './InputTodo';
+import TodosList from './TodosList';
 
-function TodoContainerReturn(props) {
+function TodoContainerReturn(addTodoItem, todos, handleChange, delTodo, setUpdate) {
   return (
     <div className="container">
       <div className="inner">
         <Header />
-        <InputTodo addTodoProps={props.addTodoItem} />
+        <InputTodo addTodoProps={addTodoItem} />
         <TodosList
-          todos={props.todos}
-          handleChangeProps={props.handleChange}
-          deleteTodoProps={props.delTodo}
-          setUpdate={props.setUpdate}
+          todos={todos}
+          handleChangeProps={handleChange}
+          deleteTodoProps={delTodo}
+          setUpdate={setUpdate}
         />
       </div>
     </div>
   );
 }
 
+function getInitialTodos() {
+  // getting stored items
+  const temp = localStorage.getItem('todos');
+  const savedTodos = JSON.parse(temp);
+  return savedTodos || [];
+}
+
 function TodoContainer() {
   const [todos, setTodos] = useState(getInitialTodos());
 
   const handleChange = (id) => {
-    setTodos((prevState) =>
-      prevState.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            completed: !todo.completed,
-          };
-        }
-        return todo;
-      })
-    );
+    setTodos((prevState) => prevState.map((todo) => {
+      if (todo.id === id) {
+        return {
+          ...todo,
+          completed: !todo.completed,
+        };
+      }
+      return todo;
+    }));
   };
 
   const delTodo = (id) => {
@@ -56,33 +60,18 @@ function TodoContainer() {
     setTodos(
       todos.map((todo) => {
         if (todo.id === id) {
+          // eslint-disable-next-line no-param-reassign
           todo.title = updatedTitle;
         }
         return todo;
-      })
+      }),
     );
   };
-
-  // useEffect(() => {
-  //   console.log("test run")
-  //   // getting stored items
-  //   const temp = localStorage.getItem("todos")
-  //   const loadedTodos = JSON.parse(temp)
-  //   if (loadedTodos) {
-  //     setTodos(loadedTodos)
-  //   }
-  // }, [])
-  function getInitialTodos() {
-    // getting stored items
-    const temp = localStorage.getItem("todos");
-    const savedTodos = JSON.parse(temp);
-    return savedTodos || [];
-  }
 
   useEffect(() => {
     // storing todos items
     const temp = JSON.stringify(todos);
-    localStorage.setItem("todos", temp);
+    localStorage.setItem('todos', temp);
   }, [todos]);
 
   return (
@@ -92,7 +81,7 @@ function TodoContainer() {
       delTodo={delTodo}
       addTodoItem={addTodoItem}
       setUpdate={setUpdate}
-    ></TodoContainerReturn>
+    />
   );
 }
 
